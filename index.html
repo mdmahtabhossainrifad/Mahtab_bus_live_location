@@ -6,10 +6,8 @@
 
   <title>Mahtab Bus Live</title>
 
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
   <style>
     body {
@@ -21,12 +19,12 @@
       background: #0b57d0;
       color: white;
       text-align: center;
-      padding: 15px;
+      padding: 14px;
     }
 
     .header h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 23px;
     }
 
     .header p {
@@ -34,15 +32,15 @@
     }
 
     #map {
+      height: 78vh;
       width: 100%;
-      height: 75vh;
     }
 
-    .route {
+    .route-info {
       background: white;
-      padding: 12px;
+      padding: 10px;
       text-align: center;
-      font-size: 14px;
+      font-size: 13px;
     }
   </style>
 </head>
@@ -51,25 +49,24 @@
 
   <div class="header">
     <h1>Mahtab Bus Live</h1>
-    <p>Live Bus Tracking System</p>
+    <p>🚌 Live Bus Tracking System</p>
   </div>
 
   <div id="map"></div>
 
-  <div class="route">
-    🚌 লাঙ্গলবন্দ → মালিবাগ → জাঙ্গাল → কেওডালা → মদনপুর → চেঙাইন
-    → নাজিমউদ্দিন ভূঁইয়া কলেজ → ললাটি আন্ডারপাস → নয়াপুর বাজার
-    → মিরের টেক → বস্তল → গাউসিয়া → সাওঘাট → ডহরগাও → ফকির ফ্যাশন
+  <div class="route-info">
+    লাঙ্গলবন্দ → মালিবাগ → জাঙ্গাল → কেওডালা → মদনপুর
+    → চেঙাইন → নাজিমউদ্দিন ভূঁইয়া কলেজ → ললাটি আন্ডারপাস
+    → নয়াপুর বাজার → মিরের টেক → বস্তল → গাউসিয়া
+    → সাওঘাট → ডহরগাও → ফকির ফ্যাশন
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <script>
 
-    // Map
-    const map = L.map('map').setView([23.6800, 90.5800], 12);
+    const map = L.map('map').setView([23.68, 90.59], 12);
 
-    // OpenStreetMap
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       {
@@ -78,61 +75,86 @@
       }
     ).addTo(map);
 
-    // Bus stops
+
+    /*
+      IMPORTANT:
+      এগুলো এখন TEST coordinates।
+      পরের ধাপে আমরা আপনার Google Maps-এর
+      আসল পিনের coordinates বসাবো।
+    */
+
     const stops = [
-      "লাঙ্গলবন্দ",
-      "মালিবাগ",
-      "জাঙ্গাল",
-      "কেওডালা",
-      "মদনপুর",
-      "চেঙাইন",
-      "নাজিমউদ্দিন ভূঁইয়া কলেজ",
-      "ললাটি আন্ডারপাস",
-      "নয়াপুর বাজার",
-      "মিরের টেক",
-      "বস্তল",
-      "গাউসিয়া",
-      "সাওঘাট",
-      "ডহরগাও",
-      "ফকির ফ্যাশন"
+      {name:"লাঙ্গলবন্দ", lat:23.6601, lon:90.5670},
+      {name:"মালিবাগ", lat:23.6660, lon:90.5750},
+      {name:"জাঙ্গাল", lat:23.6700, lon:90.5800},
+      {name:"কেওডালা", lat:23.6750, lon:90.5850},
+      {name:"মদনপুর", lat:23.6810, lon:90.5900},
+      {name:"চেঙাইন", lat:23.6870, lon:90.5950},
+      {name:"নাজিমউদ্দিন ভূঁইয়া কলেজ", lat:23.6920, lon:90.6000},
+      {name:"ললাটি আন্ডারপাস", lat:23.6970, lon:90.6050},
+      {name:"নয়াপুর বাজার", lat:23.7020, lon:90.6100},
+      {name:"মিরের টেক", lat:23.7070, lon:90.6150},
+      {name:"বস্তল", lat:23.7120, lon:90.6200},
+      {name:"গাউসিয়া", lat:23.7170, lon:90.6250},
+      {name:"সাওঘাট", lat:23.7220, lon:90.6300},
+      {name:"ডহরগাও", lat:23.7270, lon:90.6350},
+      {name:"ফকির ফ্যাশন", lat:23.7320, lon:90.6400}
     ];
 
-    // Temporary route points
-    // পরে আমরা প্রতিটি স্টপের আসল GPS location বসাবো
-    const route = [
-      [23.6905, 90.5790],
-      [23.6855, 90.5800],
-      [23.6815, 90.5820],
-      [23.6780, 90.5840],
-      [23.6740, 90.5860],
-      [23.6700, 90.5880],
-      [23.6660, 90.5900],
-      [23.6620, 90.5920],
-      [23.6580, 90.5940],
-      [23.6540, 90.5960],
-      [23.6500, 90.5980],
-      [23.6460, 90.6000],
-      [23.6420, 90.6020],
-      [23.6380, 90.6040],
-      [23.6340, 90.6060]
-    ];
 
-    // Draw route
-    L.polyline(route, {
-      color: 'blue',
-      weight: 5
-    }).addTo(map);
-
-    // Add stop markers
+    // Stop markers
     stops.forEach((stop, index) => {
 
-      L.marker(route[index])
+      L.marker([stop.lat, stop.lon])
         .addTo(map)
         .bindPopup(
-          "<b>বাস স্টপ " + (index + 1) + "</b><br>" + stop
+          "<b>বাস স্টপ " + (index + 1) +
+          "</b><br>" + stop.name
         );
 
     });
+
+
+    // Route coordinates
+    const coordinates = stops
+      .map(stop => stop.lon + "," + stop.lat)
+      .join(";");
+
+
+    // Ask OSRM for driving route
+    const url =
+      "https://router.project-osrm.org/route/v1/driving/" +
+      coordinates +
+      "?overview=full&geometries=geojson";
+
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+
+        if (data.code !== "Ok") {
+          console.log("Route error:", data);
+          return;
+        }
+
+        const route = data.routes[0];
+
+        L.geoJSON(route.geometry, {
+          style: {
+            color: "blue",
+            weight: 6
+          }
+        }).addTo(map);
+
+        map.fitBounds(
+          L.geoJSON(route.geometry).getBounds(),
+          {padding: [20, 20]}
+        );
+
+      })
+      .catch(error => {
+        console.log("Routing error:", error);
+      });
 
   </script>
 
