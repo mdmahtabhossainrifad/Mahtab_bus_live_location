@@ -3,12 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Mahtab Bus Live</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      background: #0b57d0;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .header p {
+      margin: 5px 0 0;
+    }
+
+    #map {
+      width: 100%;
+      height: 75vh;
+    }
+
+    .route {
+      background: white;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
 
-  <h1>Mahtab Bus Live</h1>
-  <p>Live Bus Tracking System</p>
+  <div class="header">
+    <h1>Mahtab Bus Live</h1>
+    <p>Live Bus Tracking System</p>
+  </div>
+
+  <div id="map"></div>
+
+  <div class="route">
+    🚌 লাঙ্গলবন্দ → মালিবাগ → জাঙ্গাল → কেওডালা → মদনপুর → চেঙাইন
+    → নাজিমউদ্দিন ভূঁইয়া কলেজ → ললাটি আন্ডারপাস → নয়াপুর বাজার
+    → মিরের টেক → বস্তল → গাউসিয়া → সাওঘাট → ডহরগাও → ফকির ফ্যাশন
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+
+    // Map
+    const map = L.map('map').setView([23.6800, 90.5800], 12);
+
+    // OpenStreetMap
+    L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }
+    ).addTo(map);
+
+    // Bus stops
+    const stops = [
+      "লাঙ্গলবন্দ",
+      "মালিবাগ",
+      "জাঙ্গাল",
+      "কেওডালা",
+      "মদনপুর",
+      "চেঙাইন",
+      "নাজিমউদ্দিন ভূঁইয়া কলেজ",
+      "ললাটি আন্ডারপাস",
+      "নয়াপুর বাজার",
+      "মিরের টেক",
+      "বস্তল",
+      "গাউসিয়া",
+      "সাওঘাট",
+      "ডহরগাও",
+      "ফকির ফ্যাশন"
+    ];
+
+    // Temporary route points
+    // পরে আমরা প্রতিটি স্টপের আসল GPS location বসাবো
+    const route = [
+      [23.6905, 90.5790],
+      [23.6855, 90.5800],
+      [23.6815, 90.5820],
+      [23.6780, 90.5840],
+      [23.6740, 90.5860],
+      [23.6700, 90.5880],
+      [23.6660, 90.5900],
+      [23.6620, 90.5920],
+      [23.6580, 90.5940],
+      [23.6540, 90.5960],
+      [23.6500, 90.5980],
+      [23.6460, 90.6000],
+      [23.6420, 90.6020],
+      [23.6380, 90.6040],
+      [23.6340, 90.6060]
+    ];
+
+    // Draw route
+    L.polyline(route, {
+      color: 'blue',
+      weight: 5
+    }).addTo(map);
+
+    // Add stop markers
+    stops.forEach((stop, index) => {
+
+      L.marker(route[index])
+        .addTo(map)
+        .bindPopup(
+          "<b>বাস স্টপ " + (index + 1) + "</b><br>" + stop
+        );
+
+    });
+
+  </script>
 
 </body>
 </html>
