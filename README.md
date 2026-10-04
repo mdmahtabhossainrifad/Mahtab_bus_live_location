@@ -6,11 +6,6 @@
 
   <title>Mahtab Bus Live</title>
 
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
-
   <style>
     body {
       margin: 0;
@@ -19,24 +14,37 @@
     }
 
     .header {
-      background: #111827;
+      background: #0b57d0;
       color: white;
       padding: 15px;
       text-align: center;
     }
 
-    .header h2 {
+    .header h1 {
       margin: 0;
+      font-size: 24px;
     }
 
     .header p {
       margin: 5px 0 0;
-      font-size: 13px;
+      font-size: 14px;
     }
 
     #map {
-      height: calc(100vh - 86px);
       width: 100%;
+      height: 75vh;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 18px;
+    }
+
+    .info {
+      background: white;
+      padding: 15px;
+      text-align: center;
     }
   </style>
 </head>
@@ -44,30 +52,18 @@
 <body>
 
   <div class="header">
-    <h2>🚌 Mahtab Bus Live</h2>
-    <p>Live Bus Tracking Map</p>
+    <h1>Mahtab Bus Live</h1>
+    <p>Live Bus Tracking System</p>
   </div>
 
-  <div id="map"></div>
+  <div id="map">
+    🚌 ম্যাপ এখানে আসবে
+  </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <script>
-    const map = L.map("map").setView([23.65, 90.60], 12);
-
-    L.tileLayer(
-      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        maxZoom: 19,
-        attribution: "© OpenStreetMap contributors"
-      }
-    ).addTo(map);
-
-    L.marker([23.65, 90.60])
-      .addTo(map)
-      .bindPopup("<b>Mahtab Bus Live</b><br>Map is ready!")
-      .openPopup();
-  </script>
+  <div class="info">
+    <b>বাস রুট</b><br>
+    লাঙ্গলবন্দ → মদনপুর →  গাউসিয়া → ডহরগাও → ফকির ফ্যাশন
+  </div>
 
 </body>
 </html>
